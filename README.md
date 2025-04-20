@@ -1,3 +1,32 @@
+# NanoPop - 超轻量级定位引擎
+
+## 源码阅读指南
+
+本项目是一个轻量级的 DOM 元素定位引擎，主要用于实现下拉菜单、工具提示等弹出层的智能定位。以下是推荐的源码阅读顺序：
+
+### 1. 核心实现
+
+- [`src/index.ts`](src/index.ts) - 核心实现文件
+  - 类型定义
+  - reposition 函数：无状态定位实现
+  - createPopper 函数：有状态定位实现
+  - 默认配置项
+
+### 2. 测试用例（按复杂度递增）
+
+- [`tests/basic.spec.ts`](tests/basic.spec.ts) - 基础功能测试
+- [`tests/arrow.spec.ts`](tests/arrow.spec.ts) - 箭头指示器测试
+- [`tests/container.spec.ts`](tests/container.spec.ts) - 容器限制测试
+- [`tests/repositioning.spec.ts`](tests/repositioning.spec.ts) - 重定位逻辑测试
+
+### 3. 测试页面示例
+
+- [`tests/_pages/`](tests/_pages/) - 包含各种场景的测试页面
+  - basic-*.html - 基础功能演示
+  - with-arrow-*.html - 带箭头指示器的示例
+  - container.html - 容器限制示例
+  - repositioning-*.html - 重定位逻辑示例
+
 <h3 align="center">
     <img src="https://user-images.githubusercontent.com/30767528/81419142-155b4100-914e-11ea-913b-cb9f0cccd4e2.png" width="500" alt="Logo">
 </h3>
@@ -32,6 +61,7 @@ Nanopop is an ultra-tiny positioning engine. Hold up, isn't there [PopperJS](htt
 Yeah - and PopperJS is great! But there are tons of features that, in most cases, you just might not need. This library is less than a third of PopperJS.
 
 #### When should I use Nanopop and not PopperJS?
+
 1. Situations where you want **full control** over positioning, including handling events such as scrolling, and manual resizing.
 2. **Performance-critical** cases with lots of elements [...] nanopop will only makes changes if you say so.
 3. Poppers with **minimal footprint** such as drop-downs and tooltips which don't require that much configurability.
@@ -44,16 +74,19 @@ This library was originally part of [pickr](https://github.com/Simonwep/pickr) -
 ## Getting Started
 
 Install via npm:
+
 ```shell
-$ npm install nanopop
+npm install nanopop
 ```
 
 Install via yarn:
+
 ```shell
-$ yarn add nanopop
+yarn add nanopop
 ```
 
 Include directly via jsdelivr:
+
 ```html
 <script src="https://cdn.jsdelivr.net/npm/nanopop/dist/nanopop.umd.js"></script>
 ```
@@ -86,6 +119,7 @@ reposition(
 > ℹ Because the default-`container` is `document.documentElement` you might have to increase the `height` of the `html` element to make room for your popper (e.g. `html {height: 100vh;}`)
 
 #### All options
+
 ```ts
 import {reposition, createPopper} from 'nanopop';
 
@@ -143,5 +177,6 @@ Calling `popper.update(...)` or `reposition(...)` both returns a position-pair (
 > Tip: The returned position-pair is perfect for tool-tips to give them a little arrow!
 
 ## Caveats
+
 1. The popper-element must have `position` set to `fixed`.
 2. If nanopop cannot find a position without clipping your popper it'll revert its `top` and `left` values - you can use css / js to handle this case.
